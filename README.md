@@ -29,13 +29,13 @@ Following topics will be discussed in this course.
 ## _Layer 2 Devices:_
 - **Hub:** Hub is a network connection among devices. In past we need to manually define IP addresses foreach machine that are conected to that _Hub_. For this, we need to maintain a table by hand. If not then that will increase the change of over lapping IP addresses.
 
-![N|NIC](https://lh5.googleusercontent.com/jhn6vIbclGHnxUzfARn81TuIDcXhI5LDshx_gATq2CWyxcED-vG22rS_I8GMQhGx3TgxdSNdABQ1tulChGhX=w1366-h657)
+![N|NIC](https://lh3.googleusercontent.com/RobniCH8QUc1klSQoZ0YUqxqppKXQ1N9fusyPD9yK3VwNjnYHefxVSe6gqQh4UwzKkeJiqcZe6wceDYFPLzw=w1366-h657)
 
 - **DHCP:** In order to overcome this manual situation DHCP is being introduced. DHCP contains a HashMap (MAC, IP Address). This thing dynamically provide IP Address to a MAC. See the example below. Note: If we ping under same network then data packet will not go out of NIC card of the switch.
 
 - **Switch:** Switch is an ungrade version of _Hub_. Its being used for inter device communication. It maintains a _MAC_ table. Now, If we ping 12.13.0.3 from Device 1  then this request will request DHCP for the MAC. Then we get BBB MAC address. Now, switch will try to find the MAC in MAC table and its related port information. After that the connection is being established.
 
-![N|NIC](https://lh6.googleusercontent.com/SGVOTuA8R6kCxeUGOGcIgXulg7Gz0yT3wwZp5e6ss_XSBw3uiYCsUXghXgvLR7njTt5ivleCyLN9HT_ZdDeW=w1366-h657-rw)
+![N|NIC](https://lh5.googleusercontent.com/RMG6-G98Yo5oZJ8SuX-SgMdQgm8aRAxSitqyfGCsgd4VLlHQbyQMmEEGKbx1fn-MU8imwtk6D8SVUK4k09tT=w811-h657-rw)
 
 ## _Layer 3 Devices:_
 - **Router:** Router is being used for inter network communication. Now if we ping outside the network the what will happen? See the example below. As D1 ping 10.15.0.2 which is not under S1 switch network then the data pack will go out of the gateway to router. Then it will try to find 10.15.0.0 under the table which is RI2 interface. Then the data pack will go to S2 switch to D2 device. By this way the connection is being established.
