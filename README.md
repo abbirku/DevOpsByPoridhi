@@ -1,17 +1,14 @@
-
 # Poridhi DevOps Documentation
 ## _Course Syllabus_
-
-Following topics will be discussed in this course.
-- DevOps Google Clound
--- Basic Networking
--- Cloud Networking
--- Docker Networking
-- Application Component
--- MySql
--- Nginx
--- Microservice with Docker Compose
-- Project
+##### DevOps Google Clound
+- Basic Networking
+- Cloud Networking
+- Docker Networking
+##### Application Component
+- MySql
+- Nginx
+- Microservice with Docker Compose
+##### Project
 
 ## _Basic Networking_
 - **About OS Space & NIC:** VM (Virtual Machine) has two spaces. One _User Space_ and another _Kernel Space_. _User Space_ contains applications which communicate with _Network stack_. Communication is done through data packet. _Network stack_ sends the data packet to _NIC (Network Interface Controller)_ and this NIC send that outside. Follow the example below:-
@@ -29,15 +26,18 @@ Following topics will be discussed in this course.
 ## _Layer 2 Devices:_
 - **Hub:** Hub is a network connection among devices. In past we need to manually define IP addresses foreach machine that are conected to that _Hub_. For this, we need to maintain a table by hand. If not then that will increase the change of over lapping IP addresses.
 
-![N|NIC](https://lh3.googleusercontent.com/RobniCH8QUc1klSQoZ0YUqxqppKXQ1N9fusyPD9yK3VwNjnYHefxVSe6gqQh4UwzKkeJiqcZe6wceDYFPLzw=w1366-h657)
+![N|NIC](https://drive.google.com/uc?export=view&id=12gYY_KAKeAFJNe3TGc_lyJwuZgAOZc1_)
 
 - **DHCP:** In order to overcome this manual situation DHCP is being introduced. DHCP contains a HashMap (MAC, IP Address). This thing dynamically provide IP Address to a MAC. See the example below. Note: If we ping under same network then data packet will not go out of NIC card of the switch.
 
 - **Switch:** Switch is an ungrade version of _Hub_. Its being used for inter device communication. It maintains a _MAC_ table. Now, If we ping 12.13.0.3 from Device 1  then this request will request DHCP for the MAC. Then we get BBB MAC address. Now, switch will try to find the MAC in MAC table and its related port information. After that the connection is being established.
 
-![N|NIC](https://lh5.googleusercontent.com/RMG6-G98Yo5oZJ8SuX-SgMdQgm8aRAxSitqyfGCsgd4VLlHQbyQMmEEGKbx1fn-MU8imwtk6D8SVUK4k09tT=w811-h657-rw)
+![N|NIC](https://drive.google.com/uc?export=view&id=1Rp-Oq_87PdOGpSKT3HjxiSs8ojbah59T)
 
 ## _Layer 3 Devices:_
 - **Router:** Router is being used for inter network communication. Now if we ping outside the network the what will happen? See the example below. As D1 ping 10.15.0.2 which is not under S1 switch network then the data pack will go out of the gateway to router. Then it will try to find 10.15.0.0 under the table which is RI2 interface. Then the data pack will go to S2 switch to D2 device. By this way the connection is being established.
 
-![N|NIC](https://lh6.googleusercontent.com/SIb2Jh8j_zbrFAPSLiK-B0ohcvuSKblCo93tsUX6um-xMiKPQXSmLY7Ae5ipNC3AH4CT8rQPnPU6u-BTsjfe=w811-h657-rw)
+![N|NIC](https://drive.google.com/uc?export=view&id=1WGJFtDD5vQi2jY3buDOjoJcyHG6gUJdx)
+
+- **AS:** AS stands for Autonomus System. It connects tousands of routers of  ISP (Internet Service Provider). AS handle internet connections of a region. Many region AS are conected together to bring the world under a common network which we called internet. AS has two parts, IBGP (Inter Border Gateway Protocal) and EBGP (External Border Gateway Protocal)
+- **BGP:** BGP stands for Border Gateway Protocal. BGP make sure data packet can be send/receive from one region to another effectively. For this it needs to maintain a table which helps a data packet to travel a shortest part to reach its destination. Time to time it gets it self updated.
