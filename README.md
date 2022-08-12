@@ -1,14 +1,36 @@
+
 # Poridhi DevOps Documentation
-## _Course Syllabus_
-##### DevOps Google Clound
-- Basic Networking
-- Cloud Networking
-- Docker Networking
-##### Application Component
-- MySql
-- Nginx
-- Microservice with Docker Compose
-##### Project
+## _Classes_
+##### Class 1 (Basic Networking)
+- OS Space & NIC
+- IP Address
+- Subnet and Subnet Mask
+- NAT (Network Address Translation)
+- CIDR (Classless Inter Domain Routing)
+- Hub
+- DHCP (Border Gateway Protocal)
+- Switch
+- Router
+- AS (Autonomus System)
+- BGP (Border Gateway Protocal)
+##### Class 2 (Cloud Networking)
+- OSI Layers
+- Tansport Layer
+- Payload
+- Socket Binding
+- Three Way Hand Shaking
+- Cloud NAT
+- WebSockets
+- Physical Machine
+- Virtual Machine
+- Container
+##### Class 3 (Google Cloud Basic)
+- Aim & Workflow
+- VPC Network
+- Virtual Machine
+- Firewall
+- NGINX
+- Check Status
 
 ## _Class 1 (Basic Networking)_
 ### _Topics: OS Space, NIC, IP Address, Subnet, CIDR, Hub, DHCP, Switch, Router, AS, BGP_
@@ -77,12 +99,78 @@
 
 - **Container:** Container is an application packet which contains the application, its dependencies and linux basic system. It operates on hosted machine OS Kernel. Through dynamic allocation of system physical resources it speed up performance.  
 
+## _Class 3 (Google Cloud Basic)_
+### _Topics: Aim & Workflow, VPC Network, Virtual Machine, Firewall & NGINX_
+- **Aim & Workflow:** In-order to deploy a developed system on google cloud we need to configure VPC Network, Virtual Machine (VM) and Firewall. The aim of this class is to configure these and check final configured system status. To achieve follow this workflow: 
+    1. Create VPC Network
+    2. Create Virtual Machine
+    3. Firewall
+    4. Setup nginx server
+    5. Check Status
+
+- **VPC Network:** After login in google cloud on serch box write _VPC Networks_ and choose it. While creating network provide 
+    - Name, 
+    - VPC network ULA internal IPv6 range (Disabled),
+    - Subnet
+        * Name
+        * Region (us-east-1)
+        * IP stack type (IPv4 (single-stack))
+        * IPv4 range (10.10.0.0/16)
+        * Private Google Access (off)
+        * Flow logs (off)
+    - Firewall rules (As it is)
+    - Dynamic routing mode (Regional)
+    - Maximum transmission unit (MTU) (1460)
+
+- **Virtual Machine:** On serch box write _VM Instances_ and choose it. While creating instance provide 
+    - Name, 
+    - Region (us-east-1)
+    - Zone (us-east1-b)
+    - Machine configuration (Under GENERAL-PURPOSE)
+        * Series (E2)
+        * Machine Type (e2-medium)
+        * Boot Disk (Size 20 GB) {_Note: You can change operating system here_}
+    - Advanced Options
+        * Network -> Network interfaces -> (Choose created VPC network name)
+
+- **Firewall (To access VM from SSh):** To access VM through SSH we need to allow IAP (Identity Aware Proxy) using Firewall. While this creating firewall provide 
+   - Name, 
+   - Logs (off),
+   - Priority (1000)
+   - Direction of traffic (Ingress)
+   - Action on match (Allow)
+   - Targets (All instances in the network)
+   - Source IP Range (35.235.240.0/20)
+   - Protocols and ports (TCP: 22)
+
+- **Firewall (To access VM hosted website):** To access VM hosted website we need to allow all IP using Firewall. While this creating firewall provide 
+   - Name, 
+   - Logs (off),
+   - Network (Choose created VPC)
+   - Priority (1100)
+   - Direction of traffic (Ingress)
+   - Action on match (Allow)
+   - Targets (All instances in the network)
+   - Source IP Range (0.0.0.0/0)
+   - Protocols and ports (Allow all)
+
+_Note:_ After creating these firewall check VM _External IP_ access using ping. Also check SSH to access VM.
+
+- **NGINX:** Now we need to setup _nginx_ and test the trafiq. Go to created VM and click SSH. When VM opens then follow these steps:
+   - sudo apt update, 
+   - sudo apt install nginx
+   - Now copy the external ip and check _tracert {ip address}_
+   
+
 ## Keywords
 - AS: Autonomous System
 - BGP: Border Gateway Protocal 
 - CIDR: Classless Inter Domain Routing
+- DHCP: Border Gateway Protocal
+- IAP: Identity Aware Proxy
 - NIC: Network Interface Controller
 - NAT: Network Address Translation
 - OSI: Open Systems Interconnection 
 - TCP: Transmission Control Protocal 
 - UDP: User Datagram Protocal
+- VPC: Virtual Private Cloud
