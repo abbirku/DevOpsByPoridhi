@@ -1,4 +1,3 @@
-
 # Poridhi DevOps Documentation
 ## _Classes_
 ##### Class 1 (Basic Networking)
@@ -31,6 +30,10 @@
 - Firewall
 - NGINX
 - Check Status
+##### Class 4 (GCP and Docker Networking with Monitoring)
+- Aim & Workflow
+- IP monitoring from VM
+- IP monitoring from Container 
 
 ## _Class 1 (Basic Networking)_
 ### _Topics: OS Space, NIC, IP Address, Subnet, CIDR, Hub, DHCP, Switch, Router, AS, BGP_
@@ -154,13 +157,44 @@
    - Source IP Range (0.0.0.0/0)
    - Protocols and ports (Allow all)
 
-_Note:_ After creating these firewall check VM _External IP_ access using ping. Also check SSH to access VM.
+_Note:_ After creating these firewalls check VM _External IP_ access using cmd ping. Need to keep in mind that by providing _Allow all_ for _Protocal and ports_ is a bad practice. Providing a specific protocol and port makes it secure. For this reason we will provide the follow _(tcp:80, icmp)_. Here, tcp:80 will allow browsing the server and icmp will allow pinging the IP address. Also check SSH to access VM.
 
 - **NGINX:** Now we need to setup _nginx_ and test the trafiq. Go to created VM and click SSH. When VM opens then follow these steps:
    - sudo apt update, 
    - sudo apt install nginx
    - Now copy the external ip and check _tracert {ip address}_
-   
+   - Also, go to browser and browse this ip address. While browsing nginx default website will be shown.
+
+## _Class 4 (GCP and Docker Networking with Monitoring)_
+### _Topics: Aim & Workflow, IP monitoring from VM & IP monitoring from Container_
+- **Aim & Workflow:** Aim of this class is to monitor IP trafiq under VM and Container from which we can understand the cloud network. In order to do so we use tcpdump at server side & tracert, curl -v in local. The workflow is being seperated into two parts
+    - IP monitoring from VM
+    - IP monitoring from container
+- **IP monitoring from VM:** After setting VPC, VM, Firewall & nginx install tcpdump on VM. And from here start monitoring. The steps are given below.
+    - sudo apt install net-tools
+    - sudo apt install tcpdump
+    - sudo ifconfig (Show linux network interfaces of VM)
+    - sudo tcpdump -i {interface name} port {port number}
+To check tcpdump response use the following command on local machine [cmd->adminstrator mode]
+    - curl -v http://{ip address}
+Note: By doing so on local tcpdump will log some text on console as we are monitoring the linux interface.
+
+- **IP monitoring from docker container:** After setting VPC, VM, Firewall install docker on VM. Create a nginx container and from inside the container start monitoring. The steps are given below.
+    - sudo apt install docker
+    - sudo apt install docker.io
+    - sudo docker pull nginx (Pull image from docker-hub. Later we can use the same image from cache)
+    - sudo docker run --name {container_name} -p 80:80 -d nginx
+    - sudo docker images (Shows docker images)
+    - sudo docker ps (Shows created containers)
+    - sudo docker exec -it {container name} bash (Brings us to inside docker container)
+--- After going inside container do following to monitory container interface through tcpdump
+    - apt install net-tools
+    - apt install tcpdump
+    - ifconfig
+    - tcpdump -i {interface name} port {port number}
+--- To check tcpdump response use the following command on local machine [cmd->adminstrator mode]
+    - curl -v http://{ip address}
+--- Note: By doing so on local tcpdump will log some text on console as we are monitoring the linux interface.
 
 ## Keywords
 - AS: Autonomous System
