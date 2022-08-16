@@ -177,7 +177,7 @@ _Note:_ After creating these firewalls check VM _External IP_ access using cmd p
     - sudo tcpdump -i {interface name} port {port number}
 To check tcpdump response use the following command on local machine [cmd->adminstrator mode]
     - curl -v http://{ip address}
-Note: By doing so on local tcpdump will log some text on console as we are monitoring the linux interface.
+_Note:_ By doing so on local tcpdump will log some text on console as we are monitoring the linux interface.
 
 - **IP monitoring from docker container:** After setting VPC, VM, Firewall install docker on VM. Create a nginx container and from inside the container start monitoring. The steps are given below.
     - sudo apt install docker
@@ -187,14 +187,14 @@ Note: By doing so on local tcpdump will log some text on console as we are monit
     - sudo docker images (Shows docker images)
     - sudo docker ps (Shows created containers)
     - sudo docker exec -it {container name} bash (Brings us to inside docker container)
---- After going inside container do following to monitory container interface through tcpdump
+After going inside container do following to monitory container interface through tcpdump
     - apt install net-tools
     - apt install tcpdump
     - ifconfig
     - tcpdump -i {interface name} port {port number}
---- To check tcpdump response use the following command on local machine [cmd->adminstrator mode]
+To check tcpdump response use the following command on local machine [cmd->adminstrator mode]
     - curl -v http://{ip address}
---- Note: By doing so on local tcpdump will log some text on console as we are monitoring the linux interface.
+_Note:_ By doing so on local tcpdump will log some text on console as we are monitoring the linux interface.
 
 ## Keywords
 - AS: Autonomous System
