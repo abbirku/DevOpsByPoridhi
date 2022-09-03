@@ -196,6 +196,54 @@ Note: By doing so on local tcpdump will log some text on console as we are monit
     - curl -v http://{ip address}
 --- Note: By doing so on local tcpdump will log some text on console as we are monitoring the linux interface.
 
+## _Class 6 & 7 (Google Cloud Storage)_
+### _Topics: Transferable Cloud Storage_
+- **Aim & Workflow:** Aim of this class is to store data in a remote storage and use that storage from different VM. To achieve follow this workflow: 
+    1. Create VPC named **dod_web_network**
+    2. Create a VM named **dod_web_vm_1**
+    3. Create a persistance disk named **dod_web_disk**
+    4. Add **dod_web_disk** disk to **dod_web_vm_1** VM instance
+    5. Mount **dod_web_disk** disk to **dod_web_vm_1** VM instance
+    6. Configuring automatic mounting on VM restart
+    7. Install **mysql** and map data dir to **dod_web_disk** (/mnt/disks/sdb)
+    8. Create database and populate Country table
+    9. Check mysql data on **dod_web_disk** disk
+    10. Disconnect **dod_web_disk** from **dod_web_vm_1**
+    10. Create another VM named **dod_web_vm_2**
+    12. Add **dod_web_disk** disk to **dod_web_vm_2** VM instance
+    13. Mount **dod_web_disk** disk to **dod_web_vm_2** VM instance
+    14. Install **mysql** and map data dir to **dod_web_disk** (/mnt/disks/sdb) for **dod_web_vm_2** VM
+    15. Map data dir to **dod_web_disk**
+    16. Check the created database and table
+
+- **Create VPC named dod_web_network:** Please follow above procedure.
+- **Create a VM named dod_web_vm_1:** Please follow above procedure.
+- **Create a persistance disk named dod_web_disk:** Please follow the below procedure.
+    - Search for _Disks_. Then click _Create Disk_.
+    - Provide disk name as **dod_web_disk**
+    - Provide region. Note: This should be under the same region of VM for getting maximum read write performance.
+    - Disk Storage Type: According to preference (Blank disk default)
+    - Disk Type: According to preference (SSD persistance disk default)
+    - Size: As you wish
+    - Select or create a snapshot schedule: default-schedule-1
+    - Encryption: Google-managed encryption key
+- **Add _dod_web_disk disk_ to _dod_web_vm_1_ VM instance:** Please follow the below procedure.
+    - Open created **_dod_web_vm_1_** instance & click edit.
+    - Now click on **ATTACH EXISTING DISK** and select **dod_web_disk**. 
+    - Then save changes.
+    - To check the disk as been added write **_sudo lsblk_** on VM console. This will show attached disk information. (named sdb). Note: The MOUNTPOINT will be empty right now.
+- **Mount dod_web_disk disk to dod_web_vm_1 VM instance:** Please follow the below procedure.
+    -  sudo mkfs.ext4 -m 0 -E lazy_itable_init=0,lazy_journal_init=0,discard /dev/sdb **(This command format the attached disk. Do this only when the disk is empty)**
+    -  sudo mkdir -p /mnt/disks/dod_web **(This command create a mount dir)**
+    -  sudo mount -o discard,defaults /dev/sdb /mnt/disks/dod_web **(This command mount sdb to /mnt/disks/dod_web dir)**
+    -  sudo chmod a+w /mnt/disks/dod_web **(This command provides read write access to attached disk)**
+    -  dh -h (Check mounted disk by this command)
+- **Configuring automatic mounting on VM restart:** Please follow the below procedure. Note: This is needed as if for some reason VM restart.
+    -  sudo cp /etc/fstab /etc/fstab.backup (Create a backup of your current /etc/fstab file. Just incase)
+    -  sudo blkid /dev/sdb (Use the blkid command to list the UUID for the disk.)
+    -  UUID=UUID_VALUE /mnt/disks/dod_web ext4 discard,defaults,nofail 0 2 (Open the /etc/fstab file in a text editor  (nano) and create an entry that includes the UUID. Note: The UUID value will come from sudo blkid command)
+    -  cat /etc/fstab (Check the saved text by this command)
+
 ## Keywords
 - AS: Autonomous System
 - BGP: Border Gateway Protocal 
